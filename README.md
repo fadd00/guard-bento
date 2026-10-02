@@ -23,7 +23,18 @@ bun run deploy
 
 This runs Wrangler from `worker/`, where `worker/wrangler.toml` and its dependency are defined. Do not use `npx wrangler deploy` from the repository root.
 
-For a **Pages dashboard deployment**, use `bun --cwd dashboard build` as the build command and `dashboard/dist` as the output directory. Pages should not run the Worker deploy command.
+For a **Pages dashboard deployment**, configure the project like this:
+
+```text
+Root directory: dashboard
+Build command: bun run build
+Build output directory: dist
+Environment variable: VITE_GUARD_API=https://<your-worker-domain>
+```
+
+Alternatively, if the Pages root directory is the repository root, use `bun --cwd dashboard build` and `dashboard/dist` as the output directory. Pages should not run the Worker deploy command.
+
+The Worker URL is an API URL, not the dashboard URL. Its `/` response only confirms that the API is running; the dashboard must be opened from the separate Pages URL.
 
 ## Architecture
 

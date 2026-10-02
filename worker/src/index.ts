@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import { prefilter } from './edge/prefilter';
 import { LimiterDO } from './do/LimiterDO';
 import { StatsDO } from './do/StatsDO';
@@ -20,6 +21,16 @@ type Bindings = {
 
 type AppEnv = { Bindings: Bindings };
 const app = new Hono<AppEnv>();
+
+app.use('/api/*', cors({ origin: '*' }));
+app.use('/v1/*', cors({ origin: '*' }));
+
+app.get('/', (c) => c.json({
+  service: 'guard',
+  message: 'Worker API is running. Open the Cloudflare Pages dashboard URL for the UI.',
+  dashboard: 'Deploy dashboard/ as a separate Cloudflare Pages project.',
+  health: '/health',
+}));
 
 app.get('/api/hit', async (c) => {
   const parsed = parseHitParams(new URL(c.req.url), c.req.raw.headers);
