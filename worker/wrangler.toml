@@ -2,6 +2,10 @@ name = "guard"
 main = "src/index.ts"
 compatibility_date = "2026-10-02"
 
+[assets]
+directory = "../dashboard/dist"
+not_found_handling = "single-page-application"
+
 [vars]
 DAILY_REQUEST_CAP = "100000"
 

@@ -23,18 +23,33 @@ bun run deploy
 
 This runs Wrangler from `worker/`, where `worker/wrangler.toml` and its dependency are defined. Do not use `npx wrangler deploy` from the repository root.
 
-For a **Pages dashboard deployment**, configure the project like this:
+For the current **unified Workers deployment**, build the dashboard as Worker static assets:
 
 ```text
-Root directory: dashboard
-Build command: bun run build
-Build output directory: dist
-Environment variable: VITE_GUARD_API=https://<your-worker-domain>
+Build command: bun run deploy
+Worker configuration: worker/wrangler.toml
+Static assets: dashboard/dist
 ```
 
-Alternatively, if the Pages root directory is the repository root, use `bun --cwd dashboard build` and `dashboard/dist` as the output directory. Pages should not run the Worker deploy command.
+The root `deploy` script builds `dashboard/` and then deploys the Worker plus its assets. The dashboard uses same-origin `/api/*` requests in production, so no `VITE_GUARD_API` variable is required for the unified deployment.
 
-The Worker URL is an API URL, not the dashboard URL. Its `/` response only confirms that the API is running; the dashboard must be opened from the separate Pages URL.
+The Worker URL now serves both the dashboard and API. `/` serves the built dashboard, while `/api/*`, `/v1/*`, and `/health` remain Worker routes.
+
+### Custom domain example
+
+With the unified Workers model, use one hostname:
+
+```text
+guards.hutamalabs.dev       -> Worker plus dashboard static assets
+```
+
+In Cloudflare:
+
+1. Configure `guards.hutamalabs.dev` as the Worker custom domain.
+2. Set the build/deploy command to `bun run deploy`.
+3. Deploy from the repository root so `dashboard/dist` is built before Wrangler uploads assets.
+
+After DNS propagation, open `https://guards.hutamalabs.dev`. The same origin serves the dashboard and its API.
 
 ## Architecture
 

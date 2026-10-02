@@ -17,8 +17,10 @@
 - No production secrets or deploy commands are used.
 - Layer 0 remains configurable in code and defaults to 100 requests per 10 seconds, above the burst cap of 80.
 - Stats are intentionally approximate because flushes are opportunistic and isolate-local.
+- Cloudflare's current unified Workers model is used: `dashboard/dist` is uploaded through the Worker `[assets]` configuration, so one custom domain serves both UI and API.
 
 ## Status
 
 - M1 implementation in progress.
 - Local M1-M4 implementation and M5 scaffolding validated with strict typecheck, five tests, Wrangler type generation, and dashboard build.
+- Unified static-assets deployment validated with Wrangler 4.147.0 dry-run; `/` serves dashboard assets and `/api/*` remains Worker-owned.

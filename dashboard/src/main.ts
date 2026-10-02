@@ -1,6 +1,6 @@
 import './style.css';
 
-const api = (import.meta.env.VITE_GUARD_API as string | undefined) ?? 'http://localhost:8787';
+const api = (import.meta.env.VITE_GUARD_API as string | undefined) ?? (import.meta.env.DEV ? 'http://localhost:8787' : '');
 const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Dashboard root missing');
 
@@ -19,5 +19,6 @@ const update = (state: { allowed: number; dropped_limiter: number; dropped_edge:
 
 async function state(): Promise<void> { const response = await fetch(`${api}/api/state`); if (response.ok) update(await response.json() as Parameters<typeof update>[0]); }
 $('#burst').addEventListener('click', async () => { const count = Math.min(80, 80); const query = new URLSearchParams({ enforce: ($('#algo') as HTMLSelectElement).value, limit: ($('#limit') as HTMLInputElement).value, window: ($('#window') as HTMLInputElement).value, fail: ($('#fail') as HTMLSelectElement).value }); await Promise.all(Array.from({ length: count }, () => fetch(`${api}/api/hit?${query}`))); await state(); });
-const stream = new WebSocket(api.replace(/^http/, 'ws') + '/api/stream'); stream.onmessage = (event) => update(JSON.parse(event.data) as Parameters<typeof update>[0]);
+const streamBase = api || `${window.location.protocol}//${window.location.host}`;
+const stream = new WebSocket(streamBase.replace(/^http/, 'ws') + '/api/stream'); stream.onmessage = (event) => update(JSON.parse(event.data) as Parameters<typeof update>[0]);
 void state();
