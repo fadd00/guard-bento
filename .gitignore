@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.dashboard/
+worker/.wrangler/
+.wrangler/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+
+# Test and coverage output
+coverage/
+.vitest/
+
+# Generated local tooling files
+*.log
+.DS_Store
+
+# Editor / OS files
+.idea/
+*.swp
+*.swo

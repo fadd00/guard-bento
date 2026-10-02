@@ -1,0 +1,12 @@
+{
+  "name": "guard",
+  "private": true,
+  "workspaces": ["worker", "dashboard"],
+  "scripts": {
+    "dev": "bun --cwd worker dev",
+    "typecheck": "bun --cwd worker typecheck && bun --cwd dashboard typecheck",
+    "test": "bun --cwd worker test",
+    "bench": "bun bench/run.ts"
+  },
+  "packageManager": "bun@1.3.5"
+}

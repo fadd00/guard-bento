@@ -1,0 +1,7 @@
+{
+  "name": "guard-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "vite", "typecheck": "tsc --noEmit", "build": "vite build" },
+  "devDependencies": { "typescript": "^5.8.2", "vite": "^6.2.0" }
+}

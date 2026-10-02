@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-02T13:07:52.141Z",
+  "target": "http://localhost:8787",
+  "metrics": {
+    "decision_p50_ms": null,
+    "decision_p95_ms": null,
+    "do_rtt_p50_ms": null,
+    "do_rtt_p95_ms": null,
+    "e2e_p50_ms": null,
+    "e2e_p95_ms": null
+  },
+  "note": "TBD: run against a live local Worker and collect Server-Timing plus client timings."
+}
