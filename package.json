@@ -4,6 +4,7 @@
   "workspaces": ["worker", "dashboard"],
   "scripts": {
     "dev": "bun --cwd worker dev",
+    "deploy": "bun --cwd worker wrangler deploy",
     "typecheck": "bun --cwd worker typecheck && bun --cwd dashboard typecheck",
     "test": "bun --cwd worker test",
     "bench": "bun bench/run.ts"

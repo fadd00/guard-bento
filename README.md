@@ -13,6 +13,18 @@ bun run bench
 
 Open the dashboard with `bun --cwd dashboard dev` and point `VITE_GUARD_API` at the Worker URL.
 
+## Cloudflare build settings
+
+For a **Worker deployment**, set the deploy command to:
+
+```sh
+bun run deploy
+```
+
+This runs Wrangler from `worker/`, where `worker/wrangler.toml` and its dependency are defined. Do not use `npx wrangler deploy` from the repository root.
+
+For a **Pages dashboard deployment**, use `bun --cwd dashboard build` as the build command and `dashboard/dist` as the output directory. Pages should not run the Worker deploy command.
+
 ## Architecture
 
 ```mermaid
